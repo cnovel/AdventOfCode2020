@@ -1,4 +1,6 @@
+import time
 
+tic = time.perf_counter()
 with open("input.txt", 'r') as f:
     lines = [x.strip() for x in f.readlines() if x.strip()]
     valid = 0
@@ -10,4 +12,5 @@ with open("input.txt", 'r') as f:
         if (password[pos[0]] == letter and password[pos[1]] != letter) or \
                 (password[pos[0]] != letter and password[pos[1]] == letter):
             valid += 1
-    print(valid, "valid passwords")
+    toc = time.perf_counter()
+    print(f"{valid} valid passwords found in {toc - tic:0.3f}s")
