@@ -48,16 +48,11 @@ class Passport:
         return True
 
 
-def valid(passport_line, strict: bool):
-    p = Passport(passport_line)
-    return p.is_valid(strict)
-
-
 def main():
     with open("input.txt", 'r') as f:
         passports = [line.replace("\n", " ").strip().split(" ") for line in f.read().split("\n\n")]
-        print(f"{len([p for p in passports if valid(p, False)])} loosely valid passports")
-        print(f"{len([p for p in passports if valid(p, True)])} strictly valid passports")
+        print(f"{len([p for p in passports if Passport(p).is_valid(False)])} loosely valid passports")
+        print(f"{len([p for p in passports if Passport(p).is_valid(True)])} strictly valid passports")
 
 
 if __name__ == "__main__":
