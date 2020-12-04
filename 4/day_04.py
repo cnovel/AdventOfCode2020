@@ -33,7 +33,7 @@ class Passport:
         else:
             return False
 
-        if not re.search(r'^#(?:[0-9a-fA-F]{3}){2}$', self.info['hcl']):
+        if not re.search(r'^#(?:[0-9a-fA-F]{6})$', self.info['hcl']):
             return False
 
         if self.info["ecl"] not in eye_colors:
