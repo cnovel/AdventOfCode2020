@@ -1,6 +1,7 @@
 import time
 import re
 
+field_names = {'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'}
 eye_colors = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
 
 
@@ -12,9 +13,7 @@ class Passport:
             self.info[p[0]] = p[1]
 
     def is_valid(self, strict: bool):
-        ks = self.info.keys()
-        if not ("byr" in ks and "iyr" in ks and "eyr" in ks and "hgt" in ks and
-                "hcl" in ks and "ecl" in ks and "pid" in ks):
+        if not field_names.issubset(set(self.info.keys())):
             return False
         if not strict:
             return True
