@@ -2,6 +2,7 @@ import time
 import re
 
 field_names = {'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'}
+field_integers = {'byr', 'iyr', 'eyr'}
 eye_colors = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
 
 
@@ -10,7 +11,7 @@ class Passport:
         self.info = {}
         for field in fields:
             p = field.split(":")
-            self.info[p[0]] = p[1]
+            self.info[p[0]] = p[1] if p[0] not in field_integers else int(p[1])
 
     def is_valid(self, strict: bool):
         if not field_names.issubset(set(self.info.keys())):
@@ -18,13 +19,9 @@ class Passport:
         if not strict:
             return True
 
-        if not 1920 <= int(self.info["byr"]) <= 2002:
-            return False
-
-        if not 2010 <= int(self.info["iyr"]) <= 2020:
-            return False
-
-        if not 2020 <= int(self.info["eyr"]) <= 2030:
+        if not 1920 <= self.info["byr"] <= 2002 \
+                or not 2010 <= self.info["iyr"] <= 2020 \
+                or not 2020 <= self.info["eyr"] <= 2030:
             return False
 
         if self.info["hgt"].endswith("cm"):
