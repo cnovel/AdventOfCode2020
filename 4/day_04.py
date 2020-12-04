@@ -51,8 +51,8 @@ class Passport:
 def main():
     with open("input.txt", 'r') as f:
         passports = [line.replace("\n", " ").strip().split(" ") for line in f.read().split("\n\n")]
-        print(f"{len([p for p in passports if Passport(p).is_valid(False)])} loosely valid passports")
-        print(f"{len([p for p in passports if Passport(p).is_valid(True)])} strictly valid passports")
+        print(f"{sum(map(lambda p: Passport(p).is_valid(False), passports))} loosely valid passports")
+        print(f"{sum(map(lambda p: Passport(p).is_valid(True), passports))} strictly valid passports")
 
 
 if __name__ == "__main__":
