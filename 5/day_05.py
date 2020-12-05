@@ -20,10 +20,8 @@ def main():
             max_seat = max(max_seat, s)
         print(f"Max seat id is {max_seat}")
         list_seat.sort()
-        for i in range(0, len(list_seat) - 1):
-            if list_seat[i+1] - list_seat[i] == 2:  # There's the gap!
-                print(f"My seat id is {list_seat[i] + 1}")
-                break
+        free_seats = [list_seat[i] + 1 for i in range(0, len(list_seat) - 1) if list_seat[i+1] - list_seat[i] == 2]
+        print(f"My seat id is {free_seats[0]}")
 
 
 if __name__ == "__main__":
