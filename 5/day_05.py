@@ -12,15 +12,9 @@ def code_to_int(code: str):
 def main():
     with open("input.txt", 'r') as f:
         codes = [line.strip() for line in f.readlines()]
-        max_seat = 0
-        list_seat = []
-        for code in codes:
-            s = code_to_int(code[0:7]) * 8 + code_to_int(code[-3:])
-            list_seat.append(s)
-            max_seat = max(max_seat, s)
-        print(f"Max seat id is {max_seat}")
-        list_seat.sort()
-        free_seats = [list_seat[i] + 1 for i in range(0, len(list_seat) - 1) if list_seat[i+1] - list_seat[i] == 2]
+        seats = sorted([code_to_int(code[0:7]) * 8 + code_to_int(code[-3:]) for code in codes])
+        print(f"Max seat id is {max(seats)}")
+        free_seats = [seats[i] + 1 for i in range(0, len(seats) - 1) if seats[i+1] - seats[i] == 2]
         print(f"My seat id is {free_seats[0]}")
 
 
