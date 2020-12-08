@@ -11,9 +11,7 @@ def process(instructions, cur, acc):
     return instructions, cur, acc
 
 
-def terminates(instructions):
-    cur = 0
-    acc = 0
+def terminates(instructions, cur, acc):
     while cur < len(instructions):
         if instructions[cur][2] == 1:
             return False, acc
@@ -24,19 +22,22 @@ def terminates(instructions):
 def main():
     with open("input.txt", 'r') as f:
         instructions = [[line.strip().split(" ")[0], line.strip().split(" ")[1], 0] for line in f.readlines()]
-        ok, acc = terminates(instructions)
-        print("Accumulator =", acc)
+        ok, acc = terminates(instructions, 0, 0)
+        print(f"Accumulator = {acc}")
+
         instructions = [[a[0], a[1], 0] for a in instructions]
         cur = 0
         acc = 0
+        swp = 0
         while cur < len(instructions):
-            copy_instructions = [[a[0], a[1], 0] for a in instructions]
+            copy_instructions = [a.copy() for a in instructions]
             cur_instr = instructions[cur][0]
             if cur_instr in ["nop", "jmp"]:
+                swp += 1
                 copy_instructions[cur][0] = "jmp" if cur_instr == "nop" else "nop"
-                ok, res = terminates(copy_instructions)
+                ok, res = terminates(copy_instructions, cur, acc)
                 if ok:
-                    print("Accumulator fixed =", res, "at line", cur+1)
+                    print(f"Accumulator fixed = {res} at line {cur+1} after {swp} swaps")
                     break
             instructions, cur, acc = process(instructions, cur, acc)
 
