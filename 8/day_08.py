@@ -36,7 +36,7 @@ def main():
                 copy_instructions[cur][0] = "jmp" if cur_instr == "nop" else "nop"
                 ok, res = terminates(copy_instructions)
                 if ok:
-                    print("Accumulator fixed = ", res)
+                    print("Accumulator fixed =", res, "at line", cur+1)
                     break
             instructions, cur, acc = process(instructions, cur, acc)
 
