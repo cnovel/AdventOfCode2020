@@ -30,10 +30,10 @@ def main():
         acc = 0
         swp = 0
         while cur < len(instructions):
-            copy_instructions = [a.copy() for a in instructions]
             cur_instr = instructions[cur][0]
             if cur_instr in ["nop", "jmp"]:
                 swp += 1
+                copy_instructions = [a.copy() for a in instructions]
                 copy_instructions[cur][0] = "jmp" if cur_instr == "nop" else "nop"
                 ok, res = terminates(copy_instructions, cur, acc)
                 if ok:
