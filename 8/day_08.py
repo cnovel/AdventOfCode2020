@@ -8,14 +8,14 @@ def process(instructions, cur, acc):
         cur += 1
     else:
         cur += int(instructions[cur][1])  # jmp
-    return instructions, cur, acc
+    return cur, acc
 
 
 def terminates(instructions, cur, acc):
     while cur < len(instructions):
         if instructions[cur][2] == 1:
             return False, acc
-        instructions, cur, acc = process(instructions, cur, acc)
+        cur, acc = process(instructions, cur, acc)
     return True, acc
 
 
@@ -39,7 +39,7 @@ def main():
                 if ok:
                     print(f"Accumulator fixed = {res} at line {cur+1} after {swp} swaps")
                     break
-            instructions, cur, acc = process(instructions, cur, acc)
+            cur, acc = process(instructions, cur, acc)
 
 
 if __name__ == "__main__":
