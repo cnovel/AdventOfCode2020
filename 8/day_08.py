@@ -4,10 +4,10 @@ import time
 def process(instructions, cur, acc):
     instructions[cur][2] = 1
     if instructions[cur][0] in ["acc", "nop"]:
-        acc += int(instructions[cur][1]) if instructions[cur][0] == "acc" else 0
+        acc += instructions[cur][1] if instructions[cur][0] == "acc" else 0
         cur += 1
     else:
-        cur += int(instructions[cur][1])  # jmp
+        cur += instructions[cur][1]  # jmp
     return cur, acc
 
 
@@ -21,7 +21,7 @@ def terminates(instructions, cur, acc):
 
 def main():
     with open("input.txt", 'r') as f:
-        instructions = [[line.strip().split(" ")[0], line.strip().split(" ")[1], 0] for line in f.readlines()]
+        instructions = [[line.strip().split(" ")[0], int(line.strip().split(" ")[1]), 0] for line in f.readlines()]
         ok, acc = terminates(instructions, 0, 0)
         print(f"Accumulator = {acc}")
 
