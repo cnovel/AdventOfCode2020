@@ -16,7 +16,7 @@ def get_view_neighbors(puzzle, r, i):
         id_s = i + d[1]
         while 0 <= id_r < len(puzzle) and 0 <= id_s < len(puzzle[r]) and puzzle[id_r][id_s] == '.':
             id_r += d[0]
-            id_s += + d[1]
+            id_s += d[1]
         if 0 <= id_r < len(puzzle) and 0 <= id_s < len(puzzle[r]):
             neighs.append(puzzle[id_r][id_s])
     return neighs
