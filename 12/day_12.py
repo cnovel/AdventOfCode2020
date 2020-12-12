@@ -23,16 +23,16 @@ def advance(h, dist, e, n):
     return e, n
 
 
-def rotate_wp(wp, delta):
+def rotate_wp(wp, rot):
     wp0 = wp[0]
     wp1 = wp[1]
-    if delta == 1:
+    if rot == 1:
         wp0 = wp[1]
         wp1 = -wp[0]
-    elif delta == 2:
+    elif rot == 2:
         wp0 = -wp[0]
         wp1 = -wp[1]
-    elif delta == 3:
+    elif rot == 3:
         wp0 = -wp[1]
         wp1 = wp[0]
     wp[0] = wp0
@@ -61,8 +61,8 @@ def main():
                 wp[0], wp[1] = advance(cmd[0], cmd[1], wp[0], wp[1])
                 continue
             if cmd[0] in 'RL':
-                delta = cmd[1] / 90 * (-1 if cmd[0] == 'L' else 1) % 4
-                rotate_wp(wp, delta)
+                rot = cmd[1] / 90 * (-1 if cmd[0] == 'L' else 1) % 4
+                rotate_wp(wp, rot)
                 continue
             east += wp[0]*cmd[1]
             north += wp[1]*cmd[1]
