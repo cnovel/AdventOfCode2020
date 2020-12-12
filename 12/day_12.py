@@ -1,14 +1,24 @@
 import time
 
 
+def h_to_l(h):
+    if h == 0:
+        return 'N'
+    if h == 1:
+        return 'E'
+    if h == 2:
+        return 'S'
+    return 'W'
+
+
 def advance(h, dist, e, n):
-    if h == 0 or h == 'N':
+    if h == 'N':
         return e, n+dist
-    if h == 1 or h == 'E':
+    if h == 'E':
         return e+dist, n
-    if h == 2 or h == 'S':
+    if h == 'S':
         return e, n-dist
-    if h == 3 or h == 'W':
+    if h == 'W':
         return e-dist, n
     return e, n
 
@@ -40,7 +50,7 @@ def main():
                 delta = cmd[1] / 90 * (-1 if cmd[0] == 'L' else 1)
                 heading = (heading+delta) % 4
                 continue
-            east, north = advance(cmd[0] if cmd[0] != 'F' else heading, cmd[1], east, north)
+            east, north = advance(cmd[0] if cmd[0] != 'F' else h_to_l(heading), cmd[1], east, north)
         print(f"East = {east}, North = {north}, MD = {abs(east)+abs(north)}")
 
         wp = [10, 1]
