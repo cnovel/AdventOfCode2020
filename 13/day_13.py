@@ -24,10 +24,10 @@ def main():
             if ids[i] != 'x':
                 buses_pos.append((int(ids[i]), i))
         ans = 0
-        step = 1
+        step = 1  # Step must be divisible by past buses
         for i in range(0, len(buses_pos)):
             while (ans + buses_pos[i][1]) % buses_pos[i][0] != 0:
-                ans += step
+                ans += step  # Adding this step does not compromise previous buses
             step *= buses_pos[i][0]
         print(f"Answer = {ans}")
 
