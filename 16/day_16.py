@@ -40,27 +40,26 @@ def main():
         for i in range(nearby_tickets, len(lines)):
             to_check = [int(x) for x in lines[i].split(',')]
             error = sum([x for x in to_check if not is_valid_somewhere(rules, x)])
+            error_rate += error
             if error == 0:
                 valid_tickets.append(to_check)
-            error_rate += error
         print(f"Error rate is {error_rate}")
 
-        found = set()
+        c_not_paired = set(range(0, len(valid_tickets[0])))
         rules_pair = {}
         work = [(k, v) for k, v in rules.items()]
         while len(work) > 0:
             field, ranges = work.pop(0)
-            columns_to_check = [i for i in range(0, len(valid_tickets[0])) if i not in found]
-            matching_col = [c for c in columns_to_check if column_match_rule(c, ranges, valid_tickets)]
+            matching_col = [c for c in c_not_paired if column_match_rule(c, ranges, valid_tickets)]
             if len(matching_col) == 1:
                 rules_pair[field] = matching_col[0]
-                found.add(matching_col[0])
+                c_not_paired.remove(matching_col[0])
             else:
                 work.append((field, ranges))
 
         departures = [my_ticket[x] for k, x in rules_pair.items() if 'departure' in k]
         if departures:
-            print(f"Departure product = {reduce((lambda x, y: x * y), departures)}")
+            print(f"Departure product is {reduce((lambda x, y: x * y), departures)}")
 
 
 if __name__ == "__main__":
