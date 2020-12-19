@@ -76,7 +76,7 @@ def main():
                 continue
             sub_line = line
             # Line must be 42-42-...-42-(42(42(...)31)31)
-            # So we first prune all the 42 ... 31, and we will left with 42s.
+            # So we first prune all the 42 ... 31, and we will be left with 42s.
             # We need to match at least one of each
             match = False
             while starts_with_any(sub_line, patterns_42) and ends_with_any(sub_line, patterns_31):
