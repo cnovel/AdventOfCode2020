@@ -44,13 +44,6 @@ def starts_with_any(line, patterns):
     return False
 
 
-def ends_with_any(line, patterns):
-    for pattern in patterns:
-        if line.endswith(pattern):
-            return True
-    return False
-
-
 def main():
     with open("input.txt", 'r') as f:
         lines = [line.strip() for line in f.readlines()]
@@ -73,24 +66,18 @@ def main():
         matching_messages = 0
         for line in lines:
             sub_line = line
-            # Line must be 42-42-...-42-(42(42(...)31)31)
-            # So we first prune all the 42 ... 31, and we will be left with 42s.
-            # We need to match at least one of each
-            match = False
-            while starts_with_any(sub_line, patterns_42) and ends_with_any(sub_line, patterns_31):
-                match = True
-                sub_line = sub_line[s42:-s31]
-            if not match:
-                continue
-
-            match = False
+            c42 = 0
+            c31 = 0
+            # We don't exactly need to match the pattern 42-...-42-(42(42(...)31)31)
+            # We can prune the 42s, then the 31s
+            # then check we have at least 1 31 and more 42s than 31s and no other patterns
             while starts_with_any(sub_line, patterns_42):
-                match = True
+                c42 += 1
                 sub_line = sub_line[s42:]
-            if not match:
-                continue
-
-            if sub_line == '':
+            while starts_with_any(sub_line, patterns_31):
+                sub_line = sub_line[s31:]
+                c31 += 1
+            if sub_line == '' and c42 > c31 > 0:
                 matching_messages += 1
         print(f'{matching_messages} recursive matching messages')
 
