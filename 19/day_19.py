@@ -55,46 +55,46 @@ def main():
     with open("input.txt", 'r') as f:
         lines = [line.strip() for line in f.readlines()]
         rules = get_rules(lines)
-        words = set(get_words(rules, 0))
-        print(f"{len(words)} possible words")
+        patterns_42 = get_words(rules, 42)
+        patterns_31 = get_words(rules, 31)
+        s42 = len(patterns_42[0])
+        s31 = len(patterns_31[0])
         matching_messages = 0
         for line in lines:
-            if ':' in line:
-                continue
-            if line in words:
+            # Format must be exactly 42 - 42 - 31
+            if len(line) == 2*s42 + s31 and \
+                    starts_with_any(line, patterns_42) and \
+                    starts_with_any(line[s42:], patterns_42) and \
+                    starts_with_any(line[2*s42:], patterns_31):
                 matching_messages += 1
         print(f'{matching_messages} matching messages')
 
-    with open("input_updated.txt") as f:
-        lines = [line.strip() for line in f.readlines()]
-        rules = get_rules(lines)
-        patterns_42 = get_words(rules, 42)
-        patterns_31 = get_words(rules, 31)
         matching_messages = 0
         for line in lines:
             if ':' in line:
                 continue
             sub_line = line
+
             # Line must be 42-42-...-42-(42(42(...)31)31)
             # So we first prune all the 42 ... 31, and we will be left with 42s.
             # We need to match at least one of each
             match = False
             while starts_with_any(sub_line, patterns_42) and ends_with_any(sub_line, patterns_31):
                 match = True
-                sub_line = sub_line[len(patterns_42[0]):-len(patterns_31[0])]
+                sub_line = sub_line[s42:-s31]
             if not match:
                 continue
 
             match = False
             while starts_with_any(sub_line, patterns_42):
                 match = True
-                sub_line = sub_line[len(patterns_42[0]):]
+                sub_line = sub_line[s42:]
             if not match:
                 continue
 
             if sub_line == '':
                 matching_messages += 1
-        print(f'{matching_messages} matching messages')
+        print(f'{matching_messages} recursive matching messages')
 
 
 if __name__ == "__main__":
