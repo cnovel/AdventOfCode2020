@@ -59,6 +59,7 @@ def main():
         patterns_31 = get_words(rules, 31)
         s42 = len(patterns_42[0])
         s31 = len(patterns_31[0])
+
         matching_messages = 0
         for line in lines:
             # Format must be exactly 42 - 42 - 31
@@ -71,10 +72,7 @@ def main():
 
         matching_messages = 0
         for line in lines:
-            if ':' in line:
-                continue
             sub_line = line
-
             # Line must be 42-42-...-42-(42(42(...)31)31)
             # So we first prune all the 42 ... 31, and we will be left with 42s.
             # We need to match at least one of each
